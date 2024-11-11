@@ -1,0 +1,11 @@
+# Dependências
+node_modules
+
+# Arquivos de ambiente
+.env
+
+# Ignorar arquivos de migração de banco de dados específicos de ambiente
+prisma/migrations/
+
+# Arquivos temporários e cache do Prisma
+.prisma/

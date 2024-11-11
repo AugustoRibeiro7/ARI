@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Modelos das tabelas
+model Usuario{
+  id Int @id @default(autoincrement())
+  nome String
+  email String @unique
+  senha String
+  dataNascimento DateTime
+  status Boolean
+  //relacionamento com tabela Prescricoes
+  prescricoes Prescricao[] // Um usuário pode ter várias prescrições
+}
+
+model Prescricao{
+  id Int @id @default(autoincrement())
+  idUsuario Int 
+  observacao String
+  frequencia DateTime
+  dataInicio DateTime
+  dataFim DateTime
+  status Boolean
+  //relacionamento com usuario
+  usuario Usuario @relation(fields: [idUsuario], references: [id]) //pode pertencer a um usuario
+
+  //relacionamento 1;1 com Historico
+  historico Historico?
+
+  // relacionamento n:n com Remedio
+  remedio Remedio[] @relation("RemedioPrescricao")
+}
+
+model Historico{
+  id Int @id @default(autoincrement())
+  idPrescricao Int @unique
+  dataAtual DateTime
+  status Boolean
+
+  //relacionamento 1:1 com Prescricao
+  prescricao Prescricao @relation(fields: [idPrescricao], references: [id])
+
+  
+}
+
+model Remedio{
+  id Int @id @default(autoincrement())
+  nome String
+  funcao String
+  dosagem Float
+  status Boolean
+
+  //relacionamento n:n com Prescricao
+  prescricao Prescricao[] @relation("RemedioPrescricao")
+}
