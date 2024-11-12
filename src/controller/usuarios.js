@@ -166,19 +166,22 @@ const deletarUsuario = async (req, res) => {
 
 
 //TOKEN
-const autenticarToken = (req, res, next)=>{
+const autenticarToken = async (req, res, next)=>{
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Usamos essa quebra pq normalmente usamos “Baerer XXX”
     
-    //verificando token
-    if (token == null) return res.sendStatus(401);
+    //verificando se token esta vazio
+    if (token == null) return res.sendStatus(401); // Token ausente
 
     try {
-        const user = jwtConfig.verifyToken(token);
+        // Verificando o token
+        const user = await jwtConfig.verifyToken(token);
         req.user = user;
-        next();
+        next(); // Passa para a próxima função (rota) se o token for válido
     } catch (error) {
-        return res.sendStatus(403);
+        // Caso o token esteja na blacklist ou qualquer outro erro, apenas retorna 403
+        console.error('Erro ao autenticar token:', error);  // Log do erro para ajudar no diagnóstico
+        return res.status(403).json({message: "Você não tem permissão para acessar este recurso."}); // Token inválido ou expirado
     }
 }
 
