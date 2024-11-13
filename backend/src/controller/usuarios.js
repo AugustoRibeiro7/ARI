@@ -80,7 +80,7 @@ const logout = async (req, res) => {
         
         // Chama a função blacklistToken para invalidar o token, o armazenando na blacklist
         jwtConfig.blacklistToken(token); 
-
+ 
         res.status(200).json({ message: 'Logout realizado com sucesso'});
 
 
