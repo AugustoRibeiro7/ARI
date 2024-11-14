@@ -21,9 +21,6 @@ export function Logout() {
                 //Remoção do cookie
                 destroyCookie(null, 'authToken');
 
-                alert('Deslogado com Sucesso');
-                alert(token);
-
                 // Redirecionar para Home
                 router.push("/");
             } else {

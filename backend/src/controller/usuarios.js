@@ -153,8 +153,9 @@ const deletarUsuario = async (req, res) => {
     const { id } = req.params;
 
     try {
-        await prisma.usuario.delete({
-            where: { id: parseInt(id) }
+        await prisma.usuario.update({
+            where: { id: parseInt(id) },
+            data:{status:false} // Altera o status para falso (usuario "deletado")
         });
         res.status(204).send();
     } catch (error) {

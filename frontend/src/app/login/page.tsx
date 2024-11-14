@@ -15,8 +15,6 @@ export default function Login() {
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();  // Previne o comportamento padrão de recarregar a página
 
-        alert('email: '+ email +" senha: "+ senha);
-
         // Requisição para o back-end
         try {
             const response = await fetch('http://localhost:3001/usuario/login', {
@@ -28,7 +26,6 @@ export default function Login() {
             });
             if (response.ok) {
                 const {token} = await response.json(); // Extraindo o corpo JSON
-                alert('Login bem-sucedido');
 
                 // Armazene o token em um cookie
                 setCookie(null, 'authToken', token, {

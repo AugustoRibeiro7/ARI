@@ -19,8 +19,6 @@ export default function SignUp()
   const handleSubmit = async (e:React.FormEvent) => {
       e.preventDefault();  // Previne o comportamento padrão de recarregar a página
 
-      alert("nome: "+nome+' email: '+ email +" senha: "+ senha + " data: "+ dataNascimento);
-
       // Requisição para o back-end
       try {
           const response = await fetch('http://localhost:3001/usuario/cadastrar', {

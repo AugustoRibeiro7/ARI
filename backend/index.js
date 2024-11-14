@@ -24,9 +24,11 @@ app.get('/', (req,res)=>{
 
 //importar rotas
 const usuarioRoutes = require('./src/routes/usuarios');
+const remedioRoutes = require('./src/routes/remedios');
 
 //usar rotas no Express
 app.use('/usuario', usuarioRoutes);
+app.use('/remedio', remedioRoutes);
 
 //ultimo elemento do arquivo
 app.listen(3001, ()=>{
